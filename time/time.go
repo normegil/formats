@@ -6,6 +6,7 @@ import (
 	"github.com/pkg/errors"
 )
 
+// Time is just an alias for time.Time, which will be marshalled in a standard time representation (RFC3339)
 type Time time.Time
 
 func (j Time) MarshalJSON() ([]byte, error) {
@@ -35,6 +36,7 @@ func (j *Time) clean(toClean string) string {
 	return toReturn
 }
 
+// String return the RFC3339 string representation of the time
 func (j Time) String() string {
 	return time.Time(j).Format(time.RFC3339)
 }

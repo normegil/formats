@@ -2,6 +2,7 @@ package error
 
 import "encoding/json"
 
+// Error can hold an error message
 type Error struct {
 	Message string
 }
@@ -22,6 +23,7 @@ func (j *Error) UnmarshalJSON(b []byte) error {
 	return json.Unmarshal([]byte(*toError["message"]), &j.Message)
 }
 
+//Error exist to comply with errors.Error interface
 func (j Error) Error() string {
 	return j.Message
 }

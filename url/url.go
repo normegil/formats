@@ -5,6 +5,7 @@ import (
 	"strings"
 )
 
+// URL contains an url.URL to be marshalled/unmarshalled
 type URL struct {
 	*url.URL
 }
