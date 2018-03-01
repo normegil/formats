@@ -7,25 +7,26 @@ import (
 )
 
 // Time is just an alias for time.Time, which will be marshalled in a standard time representation (RFC3339)
-type Time time.Time
+type MarshallableTime struct {
+	*time.Time
+}
 
-func (j Time) MarshalJSON() ([]byte, error) {
+func (j MarshallableTime) MarshalJSON() ([]byte, error) {
 	json := "\"" + j.String() + "\""
 	return []byte(json), nil
 }
 
-func (j *Time) UnmarshalJSON(b []byte) error {
+func (j *MarshallableTime) UnmarshalJSON(b []byte) error {
 	toUnmarshal := j.clean(string(b))
 	t, err := time.Parse(time.RFC3339, toUnmarshal)
 	if nil != err {
 		return errors.Wrapf(err, "Could not Unmarshall %s into Time", toUnmarshal)
 	}
-	time := Time(t)
-	j = &time
+	j.Time = &t
 	return nil
 }
 
-func (j *Time) clean(toClean string) string {
+func (j *MarshallableTime) clean(toClean string) string {
 	toReturn := toClean
 	if '"' == toReturn[0] {
 		toReturn = toReturn[1:]
@@ -37,6 +38,6 @@ func (j *Time) clean(toClean string) string {
 }
 
 // String return the RFC3339 string representation of the time
-func (j Time) String() string {
-	return time.Time(j).Format(time.RFC3339)
+func (j MarshallableTime) String() string {
+	return j.Time.Format(time.RFC3339)
 }
