@@ -59,7 +59,7 @@ func TestUnmarshal(t *testing.T) {
 			}
 
 			if testdata != parsedURL.String() {
-				t.Error("Expected (%s) is not equals to computed (%s)", testdata, parsedURL)
+				t.Errorf("Expected (%s) is not equals to computed (%s)", testdata, parsedURL)
 			}
 		})
 	}
