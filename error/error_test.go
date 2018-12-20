@@ -44,7 +44,7 @@ func TestErrorMarshallJSON(t *testing.T) {
 			}
 
 			if string(expectedBytes) != string(bytes) {
-				t.Error("Malformed JSON\n\tExpected:%s\n\tGot:%s", string(expectedBytes), string(bytes))
+				t.Errorf("Malformed JSON\n\tExpected:%s\n\tGot:%s", string(expectedBytes), string(bytes))
 			}
 		})
 	}
